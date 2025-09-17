@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod2-new
+  labels:
+    app: nginx-new
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 50
+      volumeMounts:
+        - name: nginx-storage
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index2-new.html
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: default.conf
+  volumes:
+    - name: nginx-storage
+      persistentVolumeClaim:
+        claimName: nginx-pvc-new
+    - name: nginx-config
+      configMap:
+        name: nginx-config-new
