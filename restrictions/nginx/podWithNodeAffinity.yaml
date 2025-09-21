@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-with-node-affinity
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 50 # Set a weight between 1 and 100
+          preference:
+            matchExpressions:
+              - key: this
+                operator: In
+                values:
+                  - isNginx
